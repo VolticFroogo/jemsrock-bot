@@ -23,6 +23,13 @@ export async function getTopStocks() {
     let symbols = assetResp.data.filter(a => a.tradable).map(a => a.symbol);
     let symbolChunks = [...Array(Math.ceil(symbols.length / ASSET_CHUNK_SIZE))].map(_ => symbols.splice(0, ASSET_CHUNK_SIZE));
 
+    // Get start and end time (stock closing at 16:00 EST+5) in ISO 8601 format
+    let now = new Date();
+    let start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+    let end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 16 + 5, 0, 0, 0);
+    let startIso = start.toISOString();
+    let endIso = end.toISOString();
+
     let bars = await Promise.all(symbolChunks.map(async chunk => {
         let resp = await axios.get('https://data.alpaca.markets/v2/stocks/bars',
             {
@@ -30,8 +37,8 @@ export async function getTopStocks() {
                 params: {
                     symbols: chunk.join(','),
                     limit: 10000,
-                    start: '2022-12-02T00:00:00Z',
-                    end: '2022-12-03T00:00:00Z',
+                    start: startIso,
+                    end: endIso,
                     timeframe: '1Day',
                 },
             }
