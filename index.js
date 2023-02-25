@@ -12,7 +12,6 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 client.on('ready', async () => {
     console.log(`Logged in as ${client.user.tag}!`);
 
-    let topStocks = await getTopStocks();
     let channel = await client.channels.fetch(process.env.DISCORD_CHANNEL_ID);
 
     while (true) {
@@ -29,6 +28,8 @@ client.on('ready', async () => {
         // If today is a weekend, skip
         if (target.getDay() === 0 || target.getDay() === 6)
             continue;
+
+        let topStocks = await getTopStocks();
 
         const embed = new EmbedBuilder()
             .setColor(0x00FFBB)
