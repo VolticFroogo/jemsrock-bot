@@ -34,5 +34,12 @@ export function generateChart(n) {
     let emoji = EMOJIS[emojiIndex];
     let priorEmoji = PRIOR_EMOJIS[emojiIndex] ?? CONT_EMOJI;
 
-    return [...Array(Math.max(Math.ceil(filled) - 2, 0)).fill(CONT_EMOJI), n > 1.1 ? priorEmoji : '', emoji].join('');
+    let chart = [...Array(Math.max(Math.ceil(filled) - 2, 0)).fill(CONT_EMOJI), n > 1.1 ? priorEmoji : '', emoji].join('');
+
+    // Since an entirely filled chart will be full of conts, and has an emoji of 0 (blank),
+    // it will be 1 character too short, append a cont to fix this
+    if (n >= 2 + 1 / chartLength)
+        chart += CONT_EMOJI;
+
+    return chart;
 }

@@ -17,17 +17,17 @@ client.on('ready', async () => {
     while (true) {
         // Wait until 16:15 EST+5
         // (We have to wait 15 mins past closing due API plan not allowing real-time data)
-        let now = new Date();
-        let target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 16 + 5, 15, 0, 0);
-        if (now > target)
-            target.setDate(target.getDate() + 1);
+        //let now = new Date();
+        //let target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 16 + 5, 15, 0, 0);
+        //if (now > target)
+        //    target.setDate(target.getDate() + 1);
 
-        let diff = target.getTime() - now.getTime();
-        await new Promise(resolve => setTimeout(resolve, diff));
+        //let diff = target.getTime() - now.getTime();
+        //await new Promise(resolve => setTimeout(resolve, diff));
 
-        // If today is a weekend, skip
-        if (target.getDay() === 0 || target.getDay() === 6)
-            continue;
+        //// If today is a weekend, skip
+        //if (target.getDay() === 0 || target.getDay() === 6)
+        //    continue;
 
         let topStocks = await getTopStocks();
 
