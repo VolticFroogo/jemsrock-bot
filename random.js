@@ -5,9 +5,7 @@ const EMOJIS = [
     ':rocket::rainbow::last_quarter_moon_with_face:'
 ];
 
-const PHRASES = [
-
-]
+const PHRASES = [];
 
 const random = (arr) => arr[Math.floor(Math.random() * arr.length)];
 export const randomPhrase = () => random(PHRASES);

@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+
 dotenv.config();
 
 import axios from "axios";
@@ -19,7 +20,7 @@ export async function getTopStocks() {
             asset_class: 'us_equity',
         },
     });
-    
+
     let symbols = assetResp.data.filter(a => a.tradable).map(a => a.symbol);
     let symbolChunks = [...Array(Math.ceil(symbols.length / ASSET_CHUNK_SIZE))].map(_ => symbols.splice(0, ASSET_CHUNK_SIZE));
 

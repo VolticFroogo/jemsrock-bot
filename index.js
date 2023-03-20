@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+
 dotenv.config();
 
 import { Client, EmbedBuilder, GatewayIntentBits } from "discord.js";
@@ -10,7 +11,7 @@ import lodash from 'lodash';
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.on('ready', async () => {
-    console.log(`Logged in as ${client.user.tag}!`);
+    console.log(`Logged in as ${ client.user.tag }!`);
 
     let channel = await client.channels.fetch(process.env.DISCORD_CHANNEL_ID);
 
@@ -41,8 +42,8 @@ client.on('ready', async () => {
                     let chart = generateChart(bar.diff);
 
                     return {
-                        name: `­\n${emojis} $${bar.symbol} ${emojis}`,
-                        value: `\`${lodash.padStart('+' + (bar.diff * 100 - 100).toFixed(1), 6)}%\` ${chart}`,
+                        name: `­\n${ emojis } $${ bar.symbol } ${ emojis }`,
+                        value: `[\`${ lodash.padStart('+' + (bar.diff * 100 - 100).toFixed(1), 6) }%\`](https://finance.yahoo.com/quote/${ bar.symbol }/) ${ chart }`,
                     };
                 })
             );
