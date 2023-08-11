@@ -1,4 +1,6 @@
 # JemsRock (Discord) Bot
+### THIS IS FINANCIAL ADVICE!
+
 Have you ever wanted to receive financial advice on what **YOU** should have done today on the stock market?
 
 Well now you can.
