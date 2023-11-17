@@ -16,10 +16,9 @@ client.on('ready', async () => {
     let channel = await client.channels.fetch(process.env.DISCORD_CHANNEL_ID);
 
     while (true) {
-        // Wait until 16:15 EST+5
-        // (We have to wait 15 mins past closing due API plan not allowing real-time data)
+        // Wait until 15:45 EST+5 (want the message 15 minutes before market close)
         let now = new Date();
-        let target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 16 + 5, 15, 0, 0);
+        let target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 15 + 5, 45, 0, 0);
         if (now > target)
             target.setDate(target.getDate() + 1);
 
@@ -30,7 +29,11 @@ client.on('ready', async () => {
         if (target.getDay() === 0 || target.getDay() === 6)
             continue;
 
-        let topStocks = await getTopStocks();
+        // Make end date 15:30 EST+5 (30 mins before market close)
+        // (Our API only allows date 15 mins stale, and we want the post to be 15 mins before market close)
+        let startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+        let endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 15 + 5, 30, 0, 0);
+        let topStocks = await getTopStocks(startDate, endDate);
 
         const embed = new EmbedBuilder()
             .setColor(0x00FFBB)
